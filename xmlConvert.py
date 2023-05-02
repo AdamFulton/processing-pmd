@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-with open('output.xml', 'r') as f:
+with open('./output.xml', 'r') as f:
     data = f.read()
 
 Bs_data = BeautifulSoup(data, "xml")
@@ -11,6 +11,7 @@ Bs_name = Bs_data.find_all("file")
 file_names = []
 for i in Bs_class:
     name = i["class"].split("$")
+    print(name)
     file_names.append(name[1] + ".pde")
 
 for i in range(len(Bs_name)):
