@@ -31,7 +31,17 @@ jobs:
     
     - name: Run Atelier-PMD
       run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
-     
+    
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v4
+      with:
+        path: "./requirements.txt"
+    - name: Python
+      uses: actions/setup-python@v4
+      with:
+       python-version: '3.10' 
+    - run: python ./xmlConvert.py
+    
     - uses: jwgmeligmeyling/pmd-github-action@master
       with:
         path: '**/output.xml'
