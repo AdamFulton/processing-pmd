@@ -27,48 +27,7 @@
         </example>
     </rule>
 
-    <rule name="OutOfScopeStateChangeRule"
-          message="Do not change variable {0} in the {1}, as {0} is not defined within the scope of class."
-          class="nl.utwente.processing.pmd.rules.OutOfScopeStateChangeRule">
-        <description>
-            Variables, that are defined outside the scope of a class, should never have their state altered even if
-            they class has access to them. Boolean expressions are allowed however.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-			    Foo foo;
-			    int bar;
-
-			    void setup() {
-			        bar = 32;
-			        foo = new Foo();
-			    }
-
-			    draw() {
-    			    // Wrong: Do not change the state of 'baz' withing 'foo', as 'baz' is not defined withing the
-    			    // scope of the main class.
-			        foo.baz = bar;
-			        // Correct: You can check the state of tne variable 'baz' even though it is not defined within
-			        // the scope of the main class.
-			        if (foo.baz == 0) {
-			            bar = -1;
-			        }
-			    {
-
-			    class Foo {
-			        int baz;
-
-			        Foo() {
-			            baz = 0;
-			            // Wrong: Do not change the state of global variable 'bar' from inner class 'Foo'.
-			            bar = 23;
-			        }
-
-			   }
-			]]>
-        </example>
-    </rule>
+  
 
     <rule name="DecentralizedEventHandlingRule"
           message="Do not use global event variable {0} in method {1}, as {1} is not one of the event handling methods."
@@ -87,42 +46,9 @@
         </example>
     </rule>
 
-    <rule name="PixelHardcodeIgnoranceRule"
-          message="Do not use literals for pixels for {0} inside method {1}."
-          class="nl.utwente.processing.pmd.rules.PixelHardcodeIgnoranceRule">
-        <description>
-            Drawing functions should not use pixels, but constants or variables instead.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-                 void draw() {
-                     //Wrong: Do not use hardcoded pixels.
-                     rect(10, 10, 20, 20);
-                 }
-             ]]>
-        </example>
-    </rule>
+   
 
-    <rule name="StatelessClassRule"
-          message="Class {0} does not declare any fields. Decide if any of the global variables belong here, or alternatively if these methods belong to some other class."
-          class="nl.utwente.processing.pmd.rules.StatelessClassRule">
-        <description>
-            Stateless classes are not allowed. Utility classes with only methods should define their methods in the
-            top class (global scope).
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-                 //Wrong: This class has no fields and is stateless.
-                 class Stateless {
-                     void draw() {
-                         rect(20, 30, 10, 10);
-                     }
-                 }
-             ]]>
-        </example>
-    </rule>
+    
 
     <rule name="LongMethodRule"
           message="The method {0} is too long, {1} lines of code are counted. The method should be made more efficient, split in multiple methods, or responsibilty should be delegated to other objects/classes."
@@ -186,12 +112,5 @@
         </example>
     </rule>
 
-    <rule name="GodClassRule"
-          message="The class {0} has too much responsibility. The program design should be reconsidered."
-          class="nl.utwente.processing.pmd.rules.GodClassRule">
-        <description>
-            Classes should not become a God Class, e.g. they should not take total responsibility for the whole application.
-        </description>
-        <priority>3</priority>
-    </rule>
+   
 </ruleset>
