@@ -37,7 +37,7 @@ jobs:
       uses: kibalabs/github-action-create-annotations@main
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        json-file-path: './test.json'
+        json-file-path: ./test.json
        
 
        
