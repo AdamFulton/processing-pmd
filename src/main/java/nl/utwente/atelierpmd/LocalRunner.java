@@ -7,6 +7,7 @@ import net.sourceforge.pmd.renderers.XMLRenderer;
 import nl.utwente.processing.LineInFile;
 import nl.utwente.processing.ProcessingFile;
 import nl.utwente.processing.ProcessingProject;
+import nl.utwente.processing.pmd.MyXmlRenderer;
 import nl.utwente.processing.pmd.PMDException;
 import nl.utwente.processing.pmd.PMDRunner;
 
@@ -152,7 +153,7 @@ public class LocalRunner {
         );
 
         var runner = new PMDRunner();
-        var renderer = new XMLRenderer();
+        var renderer = new MyXmlRenderer();
         File output = new File("./output.xml");
         renderer.setWriter(new FileWriter(output));
         runner.Run(project, renderer);

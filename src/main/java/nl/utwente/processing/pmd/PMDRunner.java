@@ -6,8 +6,8 @@ import net.sourceforge.pmd.util.ClasspathClassLoader;
 import net.sourceforge.pmd.util.datasource.DataSource;
 import net.sourceforge.pmd.util.datasource.ReaderDataSource;
 import nl.utwente.processing.ProcessingProject;
-
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +18,7 @@ public class PMDRunner {
 
     private PMDConfiguration config;
     private RuleSetFactory ruleSetFactory;
+    private ArrayList<DataSource> datasources = new ArrayList<DataSource>();
 
     public PMDRunner() {
         this("rulesets/atelier.xml");
@@ -36,10 +37,11 @@ public class PMDRunner {
         try {
             renderer.start();
 
-            List<DataSource> datasources = Collections.singletonList(
-                    new ReaderDataSource(new StringReader(project.getJavaProjectCode()), "Processing.pde")
-            );
+            for(int i = 0; i < project.getFileNames().size();i++) {
+                datasources.add(new ReaderDataSource(new StringReader(project.getJavaProjectCodeIndividualFiles().get(i)), project.getFileNames().get(i)));
 
+            }
+                                       
             try {
                 PMD.processFiles(
                         config,
