@@ -2,6 +2,7 @@ package nl.utwente.atelierpmd;
 
 import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.renderers.AbstractIncrementingRenderer;
+import net.sourceforge.pmd.renderers.JsonRenderer;
 import net.sourceforge.pmd.renderers.SarifRenderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
 import nl.utwente.processing.LineInFile;
@@ -153,8 +154,9 @@ public class LocalRunner {
         );
 
         var runner = new PMDRunner();
-        var renderer = new MyXmlRenderer();
-        File output = new File("./output.xml");
+        //var renderer = new MyXmlRenderer();
+        var renderer = new JsonRenderer();
+        File output = new File("./output.json");
         renderer.setWriter(new FileWriter(output));
         runner.Run(project, renderer);
     }
