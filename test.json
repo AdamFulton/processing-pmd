@@ -1,6 +1,6 @@
 [
 {
-    "file": "Submissions/s0001_Alice_Penguin/MarchPenguin/MarchPenguin.pde",
+    "file": "${{ env.GITHUB_WORKSPACE }}/Submissions/s0001_Alice_Penguin/MarchPenguin/MarchPenguin.pde",
     "line": 48,
     "title": "Document empty method body",
     "message": "Document empty method body",
