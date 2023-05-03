@@ -1,6 +1,6 @@
 [
 {
-    "file": "https://github.com/AdamFulton/processing-pmd/blob/main/Submissions/s0001_Alice_Penguin/MarchPenguin/MarchPenguin.pde",
+    "file": "Submissions/s0001_Alice_Penguin/MarchPenguin/MarchPenguin.pde",
     "line": 48,
     "title": "Document empty method body",
     "message": "Document empty method body",
