@@ -8,9 +8,14 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+
 import javax.xml.XMLConstants;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -147,16 +152,28 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
                         // Not first file ?
                         xmlWriter.writeEndElement();
                     }
+
                     filename = nextFilename;
+                  
+        String directoryPath = Paths.get("").toAbsolutePath().toString();
+        
+        List<String> filePaths = new ArrayList<String>();
+        findFiles(filename, new File(directoryPath), filePaths);
+     
+      
+    
+
+                
+                
                     writeNewLine();
                     xmlWriter.writeStartElement("file");
-                    xmlWriter.writeAttribute("name", filename);
+                    xmlWriter.writeAttribute("name", filePaths.get(0));
                     writeNewLine();
                 }
 
                 xmlWriter.writeStartElement("violation");
-                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine() - 1));
-                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine() - 1));
+                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine()));
+                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine()));
                 xmlWriter.writeAttribute("begincolumn", String.valueOf(rv.getBeginColumn()));
                 xmlWriter.writeAttribute("endcolumn", String.valueOf(rv.getEndColumn()));
                 xmlWriter.writeAttribute("rule", rv.getRule().getName());
@@ -180,6 +197,21 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
             throw new IOException(e);
         }
     }
+    public static void findFiles(String fileName, File directory, List<String> filePaths) {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        findFiles(fileName, file, filePaths);
+                    } else if (fileName.equals(file.getName())) {
+                        filePaths.add(file.getAbsolutePath());
+                    }
+                }
+            }
+        }
+    }
+
 
     
     public void end() throws IOException {

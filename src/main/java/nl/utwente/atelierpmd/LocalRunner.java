@@ -2,7 +2,6 @@ package nl.utwente.atelierpmd;
 
 import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.renderers.AbstractIncrementingRenderer;
-import net.sourceforge.pmd.renderers.JsonRenderer;
 import net.sourceforge.pmd.renderers.SarifRenderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
 import nl.utwente.processing.LineInFile;
@@ -18,9 +17,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class LocalRunner {
     // I'm sorry, but this is only for development purposes
@@ -145,18 +146,20 @@ public class LocalRunner {
             System.out.println("Usage: <project path>");
             return;
         }
+        
+      
 
+      
         var path = Path.of(args[0]);
         var project = new ProcessingProject(
-            Files.find(path, 6, (p, attr) -> attr.isRegularFile() && p.getFileName().toString().endsWith(".pde"))
+            Files.find(path, 10000, (p, attr) -> attr.isRegularFile() && p.getFileName().toString().endsWith(".pde"))
                 .map(p -> new ProcessingFile(p.getFileName().toString(), p.getFileName().toString(), readString(p)))
                 .collect(Collectors.toList())
         );
 
         var runner = new PMDRunner();
-        //var renderer = new MyXmlRenderer();
-        var renderer = new JsonRenderer();
-        File output = new File("./output.json");
+        var renderer = new MyXmlRenderer();
+        File output = new File("./output.xml");
         renderer.setWriter(new FileWriter(output));
         runner.Run(project, renderer);
     }
