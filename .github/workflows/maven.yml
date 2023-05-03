@@ -33,12 +33,11 @@ jobs:
       run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
     
     
-    - name: Annotate
-      uses: yuzutech/annotations-action@v0.4.0
+    - name: Upload linting results
+      uses: kibalabs/github-action-create-annotations@main
       with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        title: 'lint'
-        input: './test.json'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        json-file-path: ./test.json
        
 
        
