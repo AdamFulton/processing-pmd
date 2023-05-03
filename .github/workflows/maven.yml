@@ -31,7 +31,7 @@ jobs:
     
     - name: Run Atelier-PMD
       run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
-     
+    
     - uses: jwgmeligmeyling/pmd-github-action@master
       with:
         path: '**/output.xml'
