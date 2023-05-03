@@ -33,11 +33,9 @@ jobs:
       run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
     
     
-    - name: Upload linting results
-      uses: kibalabs/github-action-create-annotations@main
+    - uses: jwgmeligmeyling/pmd-github-action@master
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        json-file-path: ./test.json
+          path: '**/output.xml'
        
 
        
