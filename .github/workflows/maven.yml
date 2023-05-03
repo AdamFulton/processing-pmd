@@ -6,41 +6,38 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+name: Example Workflow
+on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    
-    - name: Run Atelier-PMD
-      run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
-    
-    
-    - name: Annotate
-      uses: yuzutech/annotations-action@v0.4.0
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        title: 'lint'
-        input: './test.json'
-       
-
-       
+      - name: Example Step
+        run: make
+        continue-on-error: true
+        if: ${{ failure() }}
+        # create a GitHub annotation with a link to a file in the repository
+      - name: Create Annotation
+        uses: actions/github-script@v4
+        with:
+            script: |
+              const annotation = {
+                title: "Build Failed",
+                annotation_level: "failure",
+                message: "An error occurred during the build",
+                // use a blob URL to link to the file at the specific version
+                file: "https://github.com/AdamFulton/processing-pmd/blob/main/Submissions/s0001_Alice_Penguin/MarchPenguin/MarchPenguin.pde",
+                start_line: 1,
+                end_line: 1,
+                start_column: 1,
+                end_column: 1,
+                // specify the SHA of the commit where the annotation was created
+                annotation_sha: context.sha
+              };
+              github.annotations.create(context.repo, context.sha, annotation);
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
 
        
