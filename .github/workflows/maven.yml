@@ -23,6 +23,10 @@ jobs:
   
       - name: Setup Processing
         uses: ifP1/setup-processing@v1.1.1
+        
+      - name: Run terminal command
+        run: |
+          ls
 
 
 
