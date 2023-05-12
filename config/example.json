@@ -1,7 +1,0 @@
-{
-    "atelierHost": "http://localhost:5000",
-    "atelierPluginUserID": "XqY+FynTRQKGT94LIsCGbA",
-    "webhookSecret": "webhookSecret",
-    "publicKey": "FILE::/path/to/public/key/file",
-    "privateKey": "FILE::/path/to/private/key/file"
-}

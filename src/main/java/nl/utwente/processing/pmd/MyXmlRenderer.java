@@ -28,6 +28,7 @@ import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDVersion;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.cpd.SourceCode.StringCodeLoader;
 import net.sourceforge.pmd.properties.StringProperty;
 import net.sourceforge.pmd.renderers.AbstractIncrementingRenderer;
 import net.sourceforge.pmd.util.StringUtil;
@@ -50,15 +51,17 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
     private XMLStreamWriter xmlWriter;
     private OutputStream stream;
     private byte[] lineSeparator;
+    String path;
 
     public MyXmlRenderer() {
         super(NAME, "XML format.");
         definePropertyDescriptor(ENCODING);
     }
 
-    public MyXmlRenderer(String encoding) {
+    
+    public MyXmlRenderer(String path) {
         this();
-        setProperty(ENCODING, encoding);
+        this.path = path;
     }
 
    
@@ -155,10 +158,7 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
 
                     filename = nextFilename;
                   
-        String directoryPath = Paths.get("").toAbsolutePath().toString();
-        
-        List<String> filePaths = new ArrayList<String>();
-        findFiles(filename, new File(directoryPath), filePaths);
+     
      
       
     
@@ -167,13 +167,13 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
                 
                     writeNewLine();
                     xmlWriter.writeStartElement("file");
-                    xmlWriter.writeAttribute("name", filePaths.get(0));
+                    xmlWriter.writeAttribute("name", path + "/" + filename);
                     writeNewLine();
                 }
 
                 xmlWriter.writeStartElement("violation");
-                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine() - 1));
-                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine() - 1));
+                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine()));
+                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine()));
                 xmlWriter.writeAttribute("begincolumn", String.valueOf(rv.getBeginColumn()));
                 xmlWriter.writeAttribute("endcolumn", String.valueOf(rv.getEndColumn()));
                 xmlWriter.writeAttribute("rule", rv.getRule().getName());

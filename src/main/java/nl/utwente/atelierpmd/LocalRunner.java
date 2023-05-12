@@ -158,7 +158,7 @@ public class LocalRunner {
         );
 
         var runner = new PMDRunner();
-        var renderer = new MyXmlRenderer();
+        var renderer = new MyXmlRenderer(path.toString());
         File output = new File("./output.xml");
         renderer.setWriter(new FileWriter(output));
         runner.Run(project, renderer);
