@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-  
+      
+      - uses: actions/checkout@v3
       - name: Setup Processing
         uses: ifP1/setup-processing@v1.1.1
         
