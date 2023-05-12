@@ -74,7 +74,7 @@
     <rule ref="category/java/codestyle.xml/ShortMethodName"/>
     <rule ref="category/java/codestyle.xml/ShortVariable">
         <properties>
-            <property name="violationSuppressRegex" value=".*like [xyzijklmnt]_?$|.*like d[xyzt]_?$|.*like [id]_?$"/>
+            <property name="violationSuppressRegex" value=".*like [xyzijklmnt]_?$|.*like d[xyzt]_?$|.*like [id]_?$|.*like m[xy]_?$"/>
         </properties>
     </rule>
     <rule ref="category/java/bestpractices.xml/UnusedFormalParameter"/>
