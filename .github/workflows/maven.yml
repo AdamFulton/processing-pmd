@@ -20,24 +20,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    
-    - name: Run Atelier-PMD
-      run: java -cp target/atelier-pmd-jar-with-dependencies.jar nl.utwente.atelierpmd.LocalRunner ./Submissions/s0001_Alice_Penguin/MarchPenguin
-    
-    
-    - uses: jwgmeligmeyling/pmd-github-action@master
-      with:
-          path: '**/output.xml'
-       
+  
+      - name: Setup Processing
+        uses: ifP1/setup-processing@v1.1.1
 
-       
+
+
 
        
