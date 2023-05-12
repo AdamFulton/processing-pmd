@@ -27,6 +27,7 @@ jobs:
       - name: Run terminal command
         run: |
           cd processing
+          cd processing-3.5.4
           ls
 
 
