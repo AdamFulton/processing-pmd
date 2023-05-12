@@ -167,7 +167,7 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
                 
                     writeNewLine();
                     xmlWriter.writeStartElement("file");
-                    xmlWriter.writeAttribute("name", path + "/" + filename);
+                    xmlWriter.writeAttribute("name",filename);
                     writeNewLine();
                 }
 
