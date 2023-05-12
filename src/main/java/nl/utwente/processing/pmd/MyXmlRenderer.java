@@ -172,10 +172,10 @@ public class MyXmlRenderer extends AbstractIncrementingRenderer {
                 }
 
                 xmlWriter.writeStartElement("violation");
-                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine()));
-                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine()));
-                xmlWriter.writeAttribute("begincolumn", String.valueOf(rv.getBeginColumn()));
-                xmlWriter.writeAttribute("endcolumn", String.valueOf(rv.getEndColumn()));
+                xmlWriter.writeAttribute("beginline", String.valueOf(rv.getBeginLine() - 1));
+                xmlWriter.writeAttribute("endline", String.valueOf(rv.getEndLine() - 1));
+                xmlWriter.writeAttribute("begincolumn", String.valueOf(rv.getBeginColumn() -1));
+                xmlWriter.writeAttribute("endcolumn", String.valueOf(rv.getEndColumn() - 1));
                 xmlWriter.writeAttribute("rule", rv.getRule().getName());
                 xmlWriter.writeAttribute("ruleset", rv.getRule().getRuleSetName());
                 maybeAdd("package", rv.getPackageName());
