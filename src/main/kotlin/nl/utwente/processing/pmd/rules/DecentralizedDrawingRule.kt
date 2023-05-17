@@ -66,7 +66,12 @@ class DecentralizedDrawingRule : AbstractJavaRule() {
         return super.visit(node, data)
     }
 
-    private fun checkStatementExpressions(statements: List<ASTStatementExpression>, node: ASTClassOrInterfaceDeclaration, data: Any) {
+    private fun checkStatementExpressions(statements: List<ASTStatementExpression>, node: ASTClassOrInterfaceDeclaration, data: Any, depth: Int = 0, maxDepth: Int = 1000) {
+        // Check if we are too deep. Otherwise, we will get a StackOverflowError.
+        if (depth > maxDepth) {
+            return
+        }
+
         val localVariables = extractLocalVariables(statements[0].getFirstParentOfType(ASTMethodDeclaration::class.java))
         for (statement in statements) {
             if (statement.getFirstDescendantOfType(ASTName::class.java) == null) {
@@ -78,22 +83,27 @@ class DecentralizedDrawingRule : AbstractJavaRule() {
             if (statement.getFirstDescendantOfType(ASTName::class.java).image.contains('.')) { // Check if method is called from an instantiated class.
                 val expression = statement.getFirstDescendantOfType(ASTName::class.java).image.split('.')
                 if (globalVariables.containsKey(expression[0])) {
-                    checkClassMethod(expression[1], globalVariables[expression[0]], node, data)
+                    checkClassMethod(expression[1], globalVariables[expression[0]], node, data, depth + 1, maxDepth)
                 } else if (localVariables.containsKey(expression[0])) {
-                    checkClassMethod(expression[1], localVariables[expression[0]], node, data)
+                    checkClassMethod(expression[1], localVariables[expression[0]], node, data, depth + 1, maxDepth)
                 }
             }
             if (stringToMethodDeclarations.containsKey(statement.getFirstDescendantOfType(ASTName::class.java).image)) { // Check if method is from the Main Tab.
                 checkClassMethod(statement.getFirstDescendantOfType(ASTName::class.java).image, statement.getFirstParentOfType(ASTClassOrInterfaceDeclaration::class.java)
-                        , node, data)
+                        , node, data, depth + 1, maxDepth)
             }
         }
     }
 
-    private fun checkClassMethod(targetMethod: String, targetClass: ASTClassOrInterfaceDeclaration?, node: ASTClassOrInterfaceDeclaration, data: Any) {
+    private fun checkClassMethod(targetMethod: String, targetClass: ASTClassOrInterfaceDeclaration?, node: ASTClassOrInterfaceDeclaration, data: Any, depth: Int = 0, maxDepth: Int = 1000) {
+        // Check if we are too deep. Otherwise, we will get a StackOverflowError.
+        if (depth > maxDepth) {
+            return
+        }
+
         for (method in targetClass?.findDescendantsOfType(ASTMethodDeclaration::class.java)!!) {
             if (method.name == targetMethod) {
-                checkStatementExpressions(method.findDescendantsOfType(ASTStatementExpression::class.java), node, data)
+                checkStatementExpressions(method.findDescendantsOfType(ASTStatementExpression::class.java), node, data, depth + 1, maxDepth)
             }
         }
     }
